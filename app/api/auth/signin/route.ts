@@ -2,7 +2,6 @@ import { createSession } from "@/lib/create-session";
 import prisma from "@/prisma/client";
 import bycrypt from "bcrypt"
 import { NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json() as {
@@ -14,10 +13,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request, invalid payload" }, { status: 400 })
   }
 
+  const whereClause = email.includes("@") ? { email: email } : { username: email }
+
   const user = await prisma.user.findUnique({
-    where: {
-      email: email
-    }
+    where: whereClause
   })
 
   if (!user) {

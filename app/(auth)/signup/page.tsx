@@ -7,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function SignUp() {
   return (
-    <Card className="min-w-[450px]">
+    <Card className="w-[500px]">
       <CardHeader>
         <CardTitle className="text-2xl">Sign Up</CardTitle>
         <CardDescription>
@@ -21,10 +22,18 @@ export default function SignUp() {
         <SignUpForm />
       </CardContent>
       <CardFooter>
-        <p className="text-xs text-muted-foreground text-center">
-          By signing up, you agree to our Terms , Privacy Policy and Cookies
-          Policy.
-        </p>
+        <div className="flex flex-col space-y-1">
+          <p className="text-xs text-muted-foreground text-center">
+            By signing up, you agree to our Terms, Privacy Policy, and Cookies
+            Policy.
+          </p>
+          <p className="text-xs text-muted-foreground text-center">
+            Already have an account?{" "}
+            <Link className="underline" href="/signin">
+              Sign In
+            </Link>
+          </p>
+        </div>
       </CardFooter>
     </Card>
   );

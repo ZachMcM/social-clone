@@ -1,28 +1,38 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import * as bcrypt from "bcrypt"
-import { v4 as uuidv4 } from 'uuid'
 import { createSession } from "@/lib/create-session";
 
 export async function POST(req: NextRequest) {
-  const { name, email, password } = await req.json() as { 
-    name?: string
+  const { name, username, email, password } = await req.json() as { 
+    name?: string,
+    username?: string,
     email?: string,
     password?: string
   }
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password ||!username) {
     return NextResponse.json({ error: "Invalid request, invalid payload" }, { status: 400 })
   }
 
-  const user = await prisma.user.findUnique({
+  const sameEmail = await prisma.user.findUnique({
     where: {
       email: email
     }
   })
 
-  if (user) {
-    return NextResponse.json({ error: "Invalid request, user already exists" }, { status: 400 })
+  if (sameEmail) {
+    return NextResponse.json({ error: "Error, a user with this email already exists." }, { status: 400 })
+  }
+
+  const sameUsername = await prisma.user.findUnique({
+    where: {
+      username: username
+    }
+  })
+
+  if (sameUsername) {
+    return NextResponse.json({ error: "Error, a user with this username already exists." }, { status: 400 })
   }
 
   const encryptedPassword = await bcrypt.hash(password, 10)
@@ -30,6 +40,7 @@ export async function POST(req: NextRequest) {
   const newUser = await prisma.user.create({
     data: {
       name,
+      username,
       email,
       password: encryptedPassword
     }

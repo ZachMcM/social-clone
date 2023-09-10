@@ -19,6 +19,7 @@ import { Loader2 } from "lucide-react";
 const formSchema = z
   .object({
     name: z.string().nonempty({ message: "Name can't be empty" }),
+    username: z.string().min(1, { message: "Username can't be less than 1 character." }).max(50, { message: "Username can't be more than 50 characters." }),
     email: z.string().email(),
     password: z
       .string()
@@ -45,7 +46,7 @@ export function SignUpForm() {
 
   function onSubmit(values: FormValues) {
     console.log(values);
-    signUp(values as Pick<FormValues, "name" | "email" | "password">)
+    signUp(values as Pick<FormValues, "name" | "username" | "email" | "password">)
   }
 
   return (
@@ -59,6 +60,19 @@ export function SignUpForm() {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="John Doe" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+                <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="johndone1" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,16 +111,14 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <div className="relative">
-                  <Input type="password" {...field} />
-                </div>
+                <Input type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button className="w-full" type="submit">
-          { signingUp ? <Loader2 className="h-4 w-4"/> : "Sign Up"}
+          { signingUp ? <Loader2 className="h-4 w-4 animate-spin"/> : "Sign Up"}
         </Button>
       </form>
     </Form>

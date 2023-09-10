@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { SessionProviderValues } from "@/types/session";
+import { Check } from "lucide-react";
 
 const SessionContext = createContext<SessionProviderValues | null>(null);
 
@@ -16,9 +17,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   // the session variable
   const { data: session, isLoading: sessionLoading } = useQuery({
-    queryFn: async () => {
+    queryFn: async (): Promise<null | ExtendedSession> => {
       const res = await fetch("/api/auth/session");
-      const data = (await res.json()) as null | ExtendedSession;
+      const data = (await res.json()) as ExtendedSession;
       
       if (!res.ok) {
         return null;
@@ -54,7 +55,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
       toast({
-        description: "Successfully signed out.",
+        description: <p className="flex">Successfully signed out. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
   });
@@ -63,10 +64,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const { mutate: signUp, isLoading: signingUp } = useMutation({
     mutationFn: async ({
       name,
+      username,
       email,
       password,
     }: {
       name: string;
+      username: string;
       email: string;
       password: string;
     }) => {
@@ -74,16 +77,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         method: "POST",
         body: JSON.stringify({
           name,
+          username,
           email,
           password,
         }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error("Error, a user with this email already exists.");
+        throw new Error(data.error);
       }
 
-      const data = await res.json();
       return data;
     },
     onError: (error: Error) => {
@@ -96,7 +101,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
       toast({
-        description: "Successfully signed up.",
+        description: <p className="flex">Successfully signed up. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
   });
@@ -133,7 +138,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
       toast({
-        description: "Successfully signed in.",
+        description: <p className="flex">Successfully signed in. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
     onError: (error: Error) => {

@@ -15,8 +15,8 @@ export function NavHeader() {
         <p className="font-semibold">Social Clone</p>
         <div className="flex items-center gap-2">
           {!sessionLoading && !session && (
-            <Link href="/signup">
-              <Button variant="secondary">Sign Up</Button>
+            <Link href="/signin">
+              <Button variant="secondary">Sign In</Button>
             </Link>
           )}
           <ThemeButton />
