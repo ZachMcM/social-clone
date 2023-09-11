@@ -21,7 +21,6 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { PfpDropzone } from "./pfp-dropzone";
 import { Check, Loader2 } from "lucide-react";
-import { Separator } from "../ui/separator";
 
 const formSchema = z.object({
   name: z.string().nonempty({ message: "Name can't be empty." }),
@@ -33,10 +32,12 @@ const formSchema = z.object({
   bio: z
     .string()
     .min(1, { message: "Bio can't be less than 1 character." })
-    .max(160, { message: "Bio can't be more than 160 characters." }),
-  pfp: z.custom<File>((v) => v instanceof File, {
-    message: "Image is required",
-  }),
+    .max(150, { message: "Bio can't be more than 160 characters." }),
+  pfp: z
+    .custom<File>((v) => v instanceof File, {
+      message: "Image is required",
+    })
+    .optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -88,7 +89,9 @@ export function UserForm() {
       formData.append("username", username);
       formData.append("email", email);
       formData.append("bio", bio);
-      formData.append("pfp", pfp);
+      if (pfp) {
+        formData.append("pfp", pfp);
+      }
 
       const res = await fetch("/api/user/settings", {
         method: "PUT",
@@ -211,7 +214,6 @@ export function UserForm() {
                 <Loader2 className="h-4 w-4 ml-2 animate-spin" />
               )}
             </Button>
-            <Separator />
           </form>
         </Form>
       )}

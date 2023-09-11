@@ -40,8 +40,26 @@ export async function PUT(req: NextRequest) {
   let image = ""
 
   if (pfp) {
+    const pfpExists = supabase.storage.from("pfps").getPublicUrl(pfp.name).data.publicUrl
+
+    if (pfpExists) {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: session.userId
+        },
+        data: {
+          name,
+          username,
+          email,
+          bio,
+        }
+      })
+  
+      return NextResponse.json(updatedUser)
+    } 
+
     const { data: uploadData, error: uploadError } = await supabase.storage.from("pfps").upload(pfp.name, pfp)
-    if (!uploadData) {
+    if (uploadError) {
       console.log(uploadError)
       return NextResponse.json({ error: uploadError.message }, { status: 400 })
     }

@@ -1,8 +1,8 @@
+import DangerZone from "@/components/settings/danger-zone";
 import { UserForm } from "@/components/settings/user-form";
 import { Separator } from "@/components/ui/separator";
 import { getSession } from "@/lib/get-session";
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
 
 export default async function Settings() {
   const session = await getSession()
@@ -19,6 +19,8 @@ export default async function Settings() {
       </div>
       <Separator/>
       <UserForm/>
+      <Separator/>
+      <DangerZone/>
     </div>
   )
 }

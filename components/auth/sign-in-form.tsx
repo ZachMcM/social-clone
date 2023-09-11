@@ -69,7 +69,7 @@ export function SignInForm() {
           )}
         />
         <Button className="w-full" type="submit">
-          { signingIn ? <Loader2 className="h-4 w-4 animate-spin"/> : "Sign In"}
+          Sign In { signingIn && <Loader2 className="h-4 w-4 animate-spin"/>}
         </Button>
       </form>
     </Form>

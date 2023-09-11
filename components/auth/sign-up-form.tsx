@@ -118,7 +118,7 @@ export function SignUpForm() {
           )}
         />
         <Button className="w-full" type="submit">
-          { signingUp ? <Loader2 className="h-4 w-4 animate-spin"/> : "Sign Up"}
+          Sign Up { signingUp && <Loader2 className="h-4 w-4 animate-spin"/> }
         </Button>
       </form>
     </Form>

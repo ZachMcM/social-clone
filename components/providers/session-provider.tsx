@@ -55,7 +55,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
       toast({
-        description: <p className="flex">Successfully signed out. <Check className="h-4 w-4 ml-2"/></p>,
+        description: <p className="flex items-center">Successfully signed out. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
   });
@@ -101,7 +101,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/settings");
       toast({
-        description: <p className="flex">Successfully signed up. <Check className="h-4 w-4 ml-2"/></p>,
+        description: <p className="flex items-center">Successfully signed up. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
   });
@@ -138,7 +138,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
       toast({
-        description: <p className="flex">Successfully signed in. <Check className="h-4 w-4 ml-2"/></p>,
+        description: <p className="flex items-center">Successfully signed in. <Check className="h-4 w-4 ml-2"/></p>,
       });
     },
     onError: (error: Error) => {
