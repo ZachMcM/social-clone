@@ -1,7 +1,9 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { cn } from "@/lib/utils";
+import { Edit, User } from "lucide-react";
 
 export function PfpDropzone({
   initUrl,
@@ -22,18 +24,21 @@ export function PfpDropzone({
   }
 
   return (
-    <div className="h-[200px] w-full border border-dashed rounded-md flex justify-center items-center relative hover:bg-secondary duration-500">
+    <div className={cn("h-32 w-32 rounded-full relative", !url && "border")}>
       <input
         type="file"
         onChange={(e) => handleFileUpload(e)}
-        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+        className="absolute inset-0 opacity-0 z-10"
       />
-      {
-        url &&
-        <Avatar className="h-16 w-16">
-          <AvatarImage src={url}/>  
+        <Avatar className="w-full h-full">
+          <AvatarImage src={url}/> 
+          <AvatarFallback>
+            <User className="h-16 w-16"/>
+          </AvatarFallback>
         </Avatar>
-      }
+        <div className="absolute -bottom-2 -right-2 p-2 border bg-background rounded-md">
+          <p className="flex items-center text-xs">Edit <Edit className="h-3 w-3 ml-1.5"/></p>
+        </div>
     </div>
   );
 }

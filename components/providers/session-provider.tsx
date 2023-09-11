@@ -99,7 +99,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["session"] });
-      router.push("/");
+      router.push("/settings");
       toast({
         description: <p className="flex">Successfully signed up. <Check className="h-4 w-4 ml-2"/></p>,
       });
