@@ -16,7 +16,6 @@ export default async function NewPost() {
       <h3 className="text-3xl font-bold">New Post</h3>
       <p className="text-muted-foreground font-medium">Upload an image and add a caption to create a new post.</p>
     </div>
-    <Separator/>
     <PostForm/>
   </div>
   )

@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { ImageDropzone } from "./image-dropzone";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { Post } from "@prisma/client";
 
 const formSchema = z.object({
   image: z.custom<File>((v) => v instanceof File, {
@@ -29,7 +30,7 @@ export function PostForm() {
   const router = useRouter();
 
   const { mutate: post, isLoading: isPosting } = useMutation({
-    mutationFn: async ({ image, caption }: FormValues) => {
+    mutationFn: async ({ image, caption }: FormValues): Promise<Post> => {
       const formData = new FormData();
 
       formData.append("image", image);
@@ -101,7 +102,6 @@ export function PostForm() {
             name="caption"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Caption</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Your caption..."
@@ -113,7 +113,7 @@ export function PostForm() {
             )}
           />
           <Button type="submit" className="w-fit place-self-end">
-            Create Post {isPosting && <Loader2 className="h-4 w-4 ml-2" />}
+            Create Post {isPosting && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
           </Button>
         </div>
       </form>

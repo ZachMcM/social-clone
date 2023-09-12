@@ -1,4 +1,4 @@
-import { ExtendedSession } from "./prisma";
+import { ExtendedSession } from "./extensions";
 
 export type SessionProviderValues = {
   session: ExtendedSession | null | undefined;

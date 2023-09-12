@@ -21,14 +21,53 @@ model Session {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  email    String    @unique
-  password String
-  name     String
-  username String    @unique
-  bio      String?
-  image    String?
-  sessions Session[]
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String
+  username  String    @unique
+  bio       String?
+  image     String?
+  sessions  Session[]
+  posts     Post[]
+  comments  Comment[]
+  likes     Like[]
+  createdAt DateTime  @default(now())
 
   @@index([id])
+}
+
+model Post {
+  id        String    @id @default(cuid())
+  image     String
+  caption   String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  comments  Comment[]
+  likes     Like[]
+  createdAt DateTime  @default(now())
+
+  @@index([id])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+
+  @@index([id])
+}
+
+model Like {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
 }

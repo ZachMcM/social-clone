@@ -24,7 +24,7 @@ export function ImageDropzone({
   return (
     <div
       className={cn(
-        "w-[350px] lg:w-[500px] h-[500px] rounded-md border bg-background relative flex justify-center shadow-sm",
+        "w-full aspect-square rounded-md border bg-background relative flex justify-center shadow-sm",
         !url && "hover:border-dashed duration-500 hover:opacity-80"
       )}
     >
