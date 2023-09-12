@@ -3,12 +3,14 @@
 import { useMutation, useQueryClient } from "react-query";
 import * as z from "zod";
 import { toast } from "../ui/use-toast";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { ImageDropzone } from "./image-dropzone";
+import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
 
 const formSchema = z.object({
   image: z.custom<File>((v) => v instanceof File, {
@@ -26,7 +28,7 @@ export function PostForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { mutate: uploadPost, isLoading: isUploading } = useMutation({
+  const { mutate: post, isLoading: isPosting } = useMutation({
     mutationFn: async ({ image, caption }: FormValues) => {
       const formData = new FormData();
 
@@ -75,12 +77,15 @@ export function PostForm() {
 
   function onSubmit(values: FormValues) {
     console.log(values);
-    uploadPost(values);
+    post(values);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid lg:grid-cols-2 gap-6"
+      >
         <FormField
           name="image"
           render={({ field }) => (
@@ -91,6 +96,26 @@ export function PostForm() {
             </FormItem>
           )}
         />
+        <div className="flex flex-col space-y-6">
+          <FormField
+            name="caption"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Caption</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Your caption..."
+                    {...field}
+                    className="h-[150px]"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-fit place-self-end">
+            Create Post {isPosting && <Loader2 className="h-4 w-4 ml-2" />}
+          </Button>
+        </div>
       </form>
     </Form>
   );
