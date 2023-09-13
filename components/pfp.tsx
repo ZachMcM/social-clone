@@ -15,10 +15,8 @@ export default function Pfp({
   return (
     <Link href={`/user/${username}`} className="hover:opacity-80 duration-500">
       <Avatar className={cn(className)}>
-        <AvatarImage src={src!} />
-        <AvatarFallback className="flex items-center justify-center bg-secondary">
-          <User2 />
-        </AvatarFallback>
+        <AvatarImage src={src || "images/fallback.jpeg"} />
+        <AvatarFallback className="bg-secondary"/>
       </Avatar>
     </Link>
   );
