@@ -4,17 +4,17 @@ import { ExtendedPost, ExtendedSession } from "@/types/extensions";
 import Pfp from "../pfp";
 import { LikeButton } from "./like-button";
 import Link from "next/link";
+import { useSession } from "../providers/session-provider";
 
-export function PostCard({
-  post,
-  session,
-}: {
-  post: ExtendedPost;
-  session: null | ExtendedSession;
-}) {
+export function PostCard({ post }: { post: ExtendedPost }) {
+  const { session } = useSession();
+
   return (
     <div className="w-full flex flex-col aspect-square rounded-md border bg-background shadow-sm">
-      <Link href={`/users/${post.user.username}`} className="hover:opacity-80 duration-500">
+      <Link
+        href={`/users/${post.user.username}`}
+        className="hover:opacity-80 duration-500"
+      >
         <div className="flex items-center gap-2.5 p-3">
           <Pfp
             username={post.user.username}
@@ -32,7 +32,7 @@ export function PostCard({
         />
       </div>
       <div className="p-3 flex flex-col gap-2.5">
-        <LikeButton session={session} post={post} />
+        {session != undefined && <LikeButton session={session} post={post} />}
         <p className="text-sm">
           <span className="font-semibold">{post.user.username}</span>{" "}
           {post.caption}

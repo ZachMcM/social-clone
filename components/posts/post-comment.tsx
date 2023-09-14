@@ -5,15 +5,16 @@ import { toast } from "../ui/use-toast";
 import { Check, Trash2 } from "lucide-react";
 import Pfp from "../pfp";
 import Link from "next/link";
+import { useSession } from "../providers/session-provider";
 
 export function PostComment({
   comment,
-  session,
 }: {
   comment: ExtendedComment;
-  session: ExtendedSession | null;
 }) {
   const queryClient = useQueryClient();
+
+  const { session } = useSession()
 
   const { mutate: deleteComment, isLoading: deletingComment } = useMutation({
     mutationFn: async (): Promise<Comment> => {

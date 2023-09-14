@@ -31,16 +31,6 @@ export type ExtendedPost = Prisma.PostGetPayload<{
         }
       }
     },
-    comments: {
-      include: {
-        user: {
-          select: {
-            username: true,
-            image: true
-          }
-        }
-      }
-    },
   },
 }>;
 

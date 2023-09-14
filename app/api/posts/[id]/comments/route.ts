@@ -2,6 +2,26 @@ import { getSession } from "@/lib/get-session";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET(req: NextRequest, { params }: { params: { id: string }}) {
+  const postId = params.id
+
+  const postComments = await prisma.comment.findMany({
+    where: {
+      postId
+    },
+    include: {
+      user: {
+        select: {
+          username: true,
+          image: true
+        }
+      }
+    }
+  })
+
+  return NextResponse.json(postComments)
+}
+
 export async function POST(req: NextRequest, { params }: { params: { id: string }}) {
   const postId = params.id
   const session = await getSession()

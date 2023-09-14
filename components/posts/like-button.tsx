@@ -7,7 +7,6 @@ import { useMutation } from "react-query";
 import { toast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { TbHeart, TbHeartFilled } from "react-icons/tb"
 
 export function LikeButton({
@@ -82,7 +81,7 @@ export function LikeButton({
 
   return (
     <div className="flex items-center gap-1.5 ">
-      <p className="text-sm font-medium">{count} Likes</p>
+      <p className="text-sm font-medium">{count} Like{count != 1 && "s"}</p>
       <button onClick={() => handleLikeUpdate()} className="hover:opacity-80 duration-500">
         {
           liked ?

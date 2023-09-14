@@ -26,16 +26,6 @@ export async function GET(
           }
         }
       },
-      comments: {
-        include: {
-          user: {
-            select: {
-              username: true,
-              image: true
-            }
-          }
-        }
-      },
     },
   });
 

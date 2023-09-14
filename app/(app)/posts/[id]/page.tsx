@@ -7,7 +7,7 @@ import { PostComments } from "@/components/posts/post-comments";
 import { useSession } from "@/components/providers/session-provider";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { ExtendedPost } from "@/types/extensions";
+import { ExtendedComment, ExtendedPost } from "@/types/extensions";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 
@@ -16,19 +16,16 @@ export default function Post({ params }: { params: { id: string } }) {
 
   const router = useRouter();
 
-  const { session, sessionLoading } = useSession()
+  const { session, sessionLoading } = useSession();
 
-  const { data: post, isLoading: isPostLoading } = useQuery({
-    queryKey: ["post", { id }],
+  const { data: post, isLoading: postLoading } = useQuery({
     queryFn: async (): Promise<ExtendedPost> => {
       const res = await fetch(`/api/posts/${id}`);
       if (!res.ok) {
-        throw new Error(
-          "There was an error loading the post."
-        );
+        throw new Error("There was an error loading the post.");
       }
       const data = await res.json();
-      console.log(data)
+      console.log(data);
       return data;
     },
     onError: (err: Error) => {
@@ -45,20 +42,43 @@ export default function Post({ params }: { params: { id: string } }) {
     },
   });
 
+  const { data: comments, isLoading: commentsLoading } = useQuery({
+    queryFn: async (): Promise<ExtendedComment[]> => {
+      const res = await fetch(`/api/posts/${id}/comments`);
+      if (!res.ok) {
+        throw new Error("Therre was an error loading the comments.");
+      }
+      const data = await res.json();
+      return data;
+    },
+    onError: (err: Error) => {
+      toast({
+        description: err.message,
+        variant: "destructive",
+        action: (
+          <ToastAction altText="try again" onClick={() => router.refresh()}>
+            Try again
+          </ToastAction>
+        ),
+      });
+    },
+    queryKey: ['post', { id }]
+  });
+
   return (
     <div className="flex-1 w-full grid md:grid-cols-2 gap-6">
-      {
-        isPostLoading || sessionLoading ?
-        <PostCardSkeleton/> :
-        post && session != undefined &&
-        <PostCard post={post} session={session} />
-      }
-      {
-        isPostLoading || sessionLoading ?
-        <CommentsSkeleton/> :
-        post && session != undefined &&
-        <PostComments post={post} session={session}/>
-      }
-    </div>  
+      {postLoading || sessionLoading ? (
+        <PostCardSkeleton />
+      ) : (
+        post &&
+        session != undefined && <PostCard post={post} />
+      )}
+      {commentsLoading || sessionLoading ? (
+        <CommentsSkeleton />
+      ) : (
+        comments &&
+        session != undefined && <PostComments comments={comments} />
+      )}
+    </div>
   );
 }
