@@ -43,3 +43,14 @@ export type ExtendedPost = Prisma.PostGetPayload<{
     },
   },
 }>;
+
+export type ExtendedComment = Prisma.CommentGetPayload<{
+  include: {
+    user: {
+      select: {
+        username: true,
+        image: true
+      }
+    }
+  }
+}>
