@@ -62,7 +62,7 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
-    queryKey: ['post', { id }]
+    queryKey: ["post", { id }]
   });
 
   return (
@@ -76,8 +76,8 @@ export default function Post({ params }: { params: { id: string } }) {
       {commentsLoading || sessionLoading ? (
         <CommentsSkeleton />
       ) : (
-        comments &&
-        session != undefined && <PostComments comments={comments} />
+        comments && post &&
+        session != undefined && <PostComments comments={comments} postId={post.id}/>
       )}
     </div>
   );

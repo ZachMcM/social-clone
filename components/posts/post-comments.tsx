@@ -1,16 +1,19 @@
-import { ExtendedComment } from "@/types/extensions";
+import { ExtendedComment, ExtendedPost } from "@/types/extensions";
 import { PostComment } from "./post-comment";
+import { CommentForm } from "./comment-form";
 
-export function PostComments({ comments }: { comments: ExtendedComment[] }) {
+export function PostComments({ comments, postId }: { comments: ExtendedComment[], postId: string }) {
   return (
-    <div className="w-full h-full aspect-square border rounded-md">
+    <div className="w-full h-full aspect-square border rounded-md relative">
       {
+        comments.length == 0 ?
+        <p className="font-medium text-sm p-4">No comments.</p> :
         comments.map(comment => (
           // TODO 
-          <PostComment comment={comment}/>
+          <PostComment comment={comment} key={postId}/>
         ))
       }
-      {/* Need to add new comment section */}
+      <CommentForm postId={postId}/>
     </div>
   )
 }

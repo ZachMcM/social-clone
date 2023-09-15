@@ -113,7 +113,7 @@ export function PostForm() {
             )}
           />
           <Button type="submit" className="w-fit place-self-end">
-            Create Post {isPosting && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
+            Post {isPosting && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
           </Button>
         </div>
       </form>

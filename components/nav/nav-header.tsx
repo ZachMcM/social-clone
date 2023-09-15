@@ -12,14 +12,14 @@ export function NavHeader() {
   const { session, sessionLoading } = useSession();
 
   return (
-    <header className="sticky bg-background top-0 left-0 w-full flex z-50 items-center h-20 px-6 md:px-16">
+    <header className="sticky bg-background top-0 left-0 w-full flex z-50 items-center h-14 border-b px-6 md:px-16">
       <div className="flex items-center justify-between w-full">
         <Link href="/">
           <p className="font-semibold">Social Clone</p>
         </Link>
         <div className="flex items-center gap-1">
           {session ? (
-            <Pfp className="h-8 w-8 mr-1" username={session.user.username} src={session.user.image} />
+            <Pfp className="h-8 w-8 mr-2" username={session.user.username} src={session.user.image} />
           ) : (
             !sessionLoading &&
             !session && (

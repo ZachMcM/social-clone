@@ -2,7 +2,7 @@ import { ExtendedComment, ExtendedSession } from "@/types/extensions";
 import { Comment } from "@prisma/client";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "../ui/use-toast";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Loader2, Trash2 } from "lucide-react";
 import Pfp from "../pfp";
 import Link from "next/link";
 import { useSession } from "../providers/session-provider";
@@ -54,23 +54,27 @@ export function PostComment({
   });
 
   return (
-    <div className="w-full flex items-center gap-2.5">
+    <div className="w-full flex items-center gap-2.5 p-4">
       <Pfp
         username={comment.user.username}
         src={comment.user.image}
         className="h-8 w-8"
       />
-      <div className="w-full flex flex-col gap-1">
+      <div className="w-full flex flex-col">
         <Link href={`/users/${comment.user.username}`}>
           {" "}
-          <p className="font-semibold text-sm">{comment.user.username}</p>
+          <p className="font-semibold text-xs">{comment.user.username}</p>
         </Link>
-        <p>{comment.content}</p>
+        <p className="text-sm">{comment.content}</p>
       </div>
       {
         session?.userId == comment.userId &&
         <button className="hover:opacity-80 duration-500" onClick={() => deleteComment()}>
-          <Trash2 className="h-4 w-4 text-red-500"/>
+          {
+            !deletingComment ? 
+            <Trash2 className="h-4 w-4 text-red-500"/> :
+            <Loader2 className="h-4 w-4 animate-spin"/>
+          }
         </button>
       }
     </div>
