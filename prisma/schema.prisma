@@ -33,6 +33,8 @@ model User {
   comments  Comment[]
   likes     Like[]
   createdAt DateTime  @default(now())
+  followers User[] @relation(name: "Followers")
+  follows User[] @relation(name: "Followers")
 
   @@index([id])
 }

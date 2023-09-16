@@ -12,7 +12,7 @@ export function NavHeader() {
   const { session, sessionLoading } = useSession();
 
   return (
-    <header className="sticky bg-background top-0 left-0 w-full flex z-50 items-center h-14 border-b px-6 md:px-16">
+    <header className="sticky bg-background top-0 left-0 w-full flex z-50 items-center h-20 px-6 md:px-16">
       <div className="flex items-center justify-between w-full">
         <Link href="/">
           <p className="font-semibold">Social Clone</p>

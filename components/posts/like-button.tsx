@@ -1,6 +1,6 @@
 "use client";
 
-import { ExtendedPost, ExtendedSession } from "@/types/extensions";
+import { ExtendedPost, ExtendedSession } from "@/types/prisma";
 import { Like } from "@prisma/client";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -80,9 +80,9 @@ export function LikeButton({
   }
 
   return (
-    <div className="flex items-center gap-1.5 ">
+    <div className="flex items-center gap-1.5">
       <p className="text-sm font-medium">{count} Like{count != 1 && "s"}</p>
-      <button onClick={() => handleLikeUpdate()} className="hover:opacity-80 duration-500">
+      <button onClick={() => handleLikeUpdate()} className="hover:opacity-80 duration-500 z-10">
         {
           liked ?
           <TbHeartFilled className="h-5 w-5 text-red-500"/> :

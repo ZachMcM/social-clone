@@ -1,6 +1,6 @@
 "use client";
 
-import { ExtendedSession } from "@/types/extensions";
+import { ExtendedSession } from "@/types/prisma";
 import { ReactNode, createContext, useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "../ui/use-toast";

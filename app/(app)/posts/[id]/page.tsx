@@ -7,7 +7,7 @@ import { PostComments } from "@/components/posts/post-comments";
 import { useSession } from "@/components/providers/session-provider";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { ExtendedComment, ExtendedPost } from "@/types/extensions";
+import { ExtendedComment, ExtendedPost } from "@/types/prisma";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 
@@ -40,6 +40,7 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
+    queryKey: ['post', { id }]
   });
 
   const { data: comments, isLoading: commentsLoading } = useQuery({
@@ -62,11 +63,11 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
-    queryKey: ["post", { id }]
+    queryKey: ['comments']
   });
 
   return (
-    <div className="flex-1 w-full grid md:grid-cols-2 gap-6">
+    <div className="flex-1 w-full grid md:grid-cols-2 gap-6 h-[600px]">
       {postLoading || sessionLoading ? (
         <PostCardSkeleton />
       ) : (

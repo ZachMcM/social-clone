@@ -46,29 +46,8 @@ export async function PUT(req: NextRequest) {
       { status: 400 }
     );
   }
-
-  let image = "";
-
+  
   if (pfp) {
-    const pfpExists = supabase.storage.from("pfps").getPublicUrl(pfp.name)
-      .data.publicUrl;
-
-    if (pfpExists) {
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: session.userId,
-        },
-        data: {
-          name,
-          username,
-          email,
-          bio,
-        },
-      });
-
-      return NextResponse.json(updatedUser);
-    }
-
     const pfpName = uuidv4();
 
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -78,8 +57,23 @@ export async function PUT(req: NextRequest) {
       console.log(uploadError);
       return NextResponse.json({ error: uploadError.message }, { status: 500 });
     }
-    image = supabase.storage.from("pfps").getPublicUrl(uploadData.path)
+    const image = supabase.storage.from("pfps").getPublicUrl(uploadData.path)
       .data.publicUrl;
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: session.userId,
+        },
+        data: {
+          name,
+          username,
+          email,
+          bio,
+          image
+        },
+      });
+
+      return NextResponse.json(updatedUser)
   }
 
   const updatedUser = await prisma.user.update({
@@ -91,7 +85,6 @@ export async function PUT(req: NextRequest) {
       username,
       email,
       bio,
-      image,
     },
   });
 

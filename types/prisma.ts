@@ -44,3 +44,37 @@ export type ExtendedComment = Prisma.CommentGetPayload<{
     }
   }
 }>
+
+export type ExtendedUser = Prisma.UserGetPayload<{
+  select: {
+    posts: {
+      select: {
+        image: true,
+        id: true
+      }
+    },
+    followers: {
+      select: {
+        username: true,
+        image: true
+      }
+    },
+    follows: {
+      select: {
+        username: true,
+        image: true
+      }
+    },
+    image: true,
+    name: true,
+    username: true,
+    bio: true
+  }
+}>
+
+export type SelectivePost = Prisma.PostGetPayload<{
+  select: {
+    id: true,
+    image: true
+  }
+}>

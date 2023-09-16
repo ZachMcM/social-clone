@@ -1,4 +1,4 @@
-import { ExtendedSession } from "@/types/extensions";
+import { ExtendedSession } from "@/types/prisma";
 import { cookies } from 'next/headers';
 
 export async function getSession(): Promise<null | ExtendedSession> {

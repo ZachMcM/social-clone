@@ -35,8 +35,8 @@ export function ImageDropzone({
         className="absolute inset-0 opacity-0 z-10 cursor-pointer"
       />
       {url ? (
-        <img src={url} alt="uploaded image" className="object-center object-cover" />
-      ) : (
+        <Image src={url} fill alt={"uploaded image"} objectFit="contain"/>
+        ) : (
         <div className="w-full h-full flex flex-col space-y-1 items-center justify-center">
           <UploadCloud className="h-16 w-16" />
           <p className="text-sm text-muted-foreground">

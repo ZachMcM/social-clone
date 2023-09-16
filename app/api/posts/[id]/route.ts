@@ -1,3 +1,4 @@
+import { getSession } from "@/lib/get-session";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,4 +31,23 @@ export async function GET(
   });
 
   return NextResponse.json(post);
+}
+
+export async function DELETE(req: NextRequest, { params }: { params: { id: string }}) {
+  const id = params.id
+
+  const session = await getSession()
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
+  }
+
+  const deletedPost = await prisma.post.delete({
+    where: {
+      id,
+      userId: session.userId
+    }
+  })
+
+  return NextResponse.json(deletedPost)
 }

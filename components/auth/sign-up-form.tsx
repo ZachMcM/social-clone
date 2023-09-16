@@ -85,7 +85,7 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="johndoe@gmail.com" />
+                <Input {...field} type="email" placeholder="johndoe@gmail.com" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,7 +118,7 @@ export function SignUpForm() {
           )}
         />
         <Button className="w-full" type="submit">
-          Sign Up { signingUp && <Loader2 className="h-4 w-4 animate-spin"/> }
+          Sign Up { signingUp && <Loader2 className="h-4 w-4 ml-2 animate-spin"/> }
         </Button>
       </form>
     </Form>

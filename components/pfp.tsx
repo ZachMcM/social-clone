@@ -9,13 +9,13 @@ export default function Pfp({
   className,
 }: {
   src?: string | null;
-  username: string
+  username?: string
   className?: string;
 }) {
   return (
-    <Link href={`/user/${username}`} className="hover:opacity-80 duration-500">
+    <Link href={`/users/${username}`} className="hover:opacity-80 duration-500 z-10">
       <Avatar className={cn(className)}>
-        <AvatarImage src={src || "images/fallback.jpeg"} />
+        <AvatarImage src={src!} />
         <AvatarFallback className="bg-secondary"/>
       </Avatar>
     </Link>

@@ -49,7 +49,7 @@ export function UserForm() {
 
   const { data: user, isLoading } = useQuery({
     queryFn: async (): Promise<User> => {
-      const res = await fetch("/api/user/settings");
+      const res = await fetch("/api/users/settings");
       if (!res.ok) {
         throw new Error("There was an error loading your settings.");
       }
@@ -93,7 +93,7 @@ export function UserForm() {
         formData.append("pfp", pfp);
       }
 
-      const res = await fetch("/api/user/settings", {
+      const res = await fetch("/api/users/settings", {
         method: "PUT",
         body: formData,
       });
@@ -108,7 +108,8 @@ export function UserForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["users", { username: user?.username }] });
+      queryClient.invalidateQueries({ queryKey: ["session"] });
       toast({
         description: (
           <p className="flex">

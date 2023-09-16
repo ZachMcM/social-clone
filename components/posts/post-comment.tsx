@@ -1,4 +1,4 @@
-import { ExtendedComment, ExtendedSession } from "@/types/extensions";
+import { ExtendedComment, ExtendedSession } from "@/types/prisma";
 import { Comment } from "@prisma/client";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "../ui/use-toast";
@@ -62,7 +62,6 @@ export function PostComment({
       />
       <div className="w-full flex flex-col">
         <Link href={`/users/${comment.user.username}`}>
-          {" "}
           <p className="font-semibold text-xs">{comment.user.username}</p>
         </Link>
         <p className="text-sm">{comment.content}</p>
@@ -72,7 +71,7 @@ export function PostComment({
         <button className="hover:opacity-80 duration-500" onClick={() => deleteComment()}>
           {
             !deletingComment ? 
-            <Trash2 className="h-4 w-4 text-red-500"/> :
+            <Trash2 className="h-4 w-4 text-destructive"/> :
             <Loader2 className="h-4 w-4 animate-spin"/>
           }
         </button>

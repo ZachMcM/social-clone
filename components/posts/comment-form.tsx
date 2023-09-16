@@ -1,4 +1,4 @@
-import { ExtendedComment } from "@/types/extensions";
+import { ExtendedComment } from "@/types/prisma";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "../ui/use-toast";
 import { Check, Loader2 } from "lucide-react";

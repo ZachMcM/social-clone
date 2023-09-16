@@ -7,11 +7,11 @@ import { Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { ImageDropzone } from "./image-dropzone";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Post } from "@prisma/client";
+import { useSession } from "../providers/session-provider";
 
 const formSchema = z.object({
   image: z.custom<File>((v) => v instanceof File, {
@@ -28,9 +28,10 @@ type FormValues = z.infer<typeof formSchema>;
 export function PostForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { session } = useSession()
 
   const { mutate: post, isLoading: isPosting } = useMutation({
-    mutationFn: async ({ image, caption }: FormValues): Promise<Post> => {
+    mutationFn: async ({ image, caption }: FormValues) => {
       const formData = new FormData();
 
       formData.append("image", image);
@@ -51,8 +52,7 @@ export function PostForm() {
       return data;
     },
     onSuccess: (data) => {
-      // TODO
-      queryClient.invalidateQueries({ queryKey: [] });
+      queryClient.invalidateQueries({ queryKey: ['users', { username: session?.user.username }] });
       console.log(data);
       toast({
         description: (
@@ -109,6 +109,7 @@ export function PostForm() {
                     className="h-[150px]"
                   />
                 </FormControl>
+                <FormMessage/>
               </FormItem>
             )}
           />
