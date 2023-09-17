@@ -8,7 +8,7 @@ export function FeedSkeleton() {
     <>
     {
       Array(4).fill("").map(s => (
-        <Skeleton className="rounded-md aspect-square w-[525px]" key={useId()}/>
+        <Skeleton className="rounded-md aspect-square w-full md:w-[525px]" key={useId()}/>
       ))  
     }
     </>
