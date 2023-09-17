@@ -22,8 +22,9 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { sharePage } from "@/lib/share-page";
+import { useState } from "react";
 
 export function PostMore({ post }: { post: ExtendedPost }) {
   const shareData = {
@@ -32,9 +33,12 @@ export function PostMore({ post }: { post: ExtendedPost }) {
     url: `${process.env.NEXT_PUBLIC_URL}/posts/${post.id}`,
   };
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+
   const { session } = useSession();
   const queryClient = useQueryClient();
   const router = useRouter()
+  const pathname = usePathname()
 
   const { mutate: deletePost, isLoading: isDeletingPost } = useMutation({
     mutationFn: async () => {
@@ -63,7 +67,11 @@ export function PostMore({ post }: { post: ExtendedPost }) {
           </p>
         ),
       });
-      router.push(`/users/${session?.user.username}`)
+      if (pathname == `/posts/${post.id}`) {
+        router.push(`/users/${session?.user.username}`)
+      } else {
+        setDeleteDialogOpen(false)
+      }
     },
     onError: (err: Error) => {
       console.log(err);
@@ -75,7 +83,7 @@ export function PostMore({ post }: { post: ExtendedPost }) {
   });
 
   return (
-    <AlertDialog>
+    <AlertDialog open={deleteDialogOpen} onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="z-10">
           <Button variant="ghost" size="icon">

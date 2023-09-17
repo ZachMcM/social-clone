@@ -36,7 +36,7 @@ export default function Home() {
           action: <ToastAction altText="try again" onClick={() => router.refresh()}>Try again</ToastAction>
         })
       },
-      queryKey: ['infinite-scroll']
+      queryKey: ['feed']
     });
 
   const lastPostRef = useRef<HTMLElement>(null);
