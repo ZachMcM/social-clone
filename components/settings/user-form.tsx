@@ -112,7 +112,7 @@ export function UserForm() {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       toast({
         description: (
-          <p className="flex">
+          <p className="flex items-center">
             Successfully updated your settings.{" "}
             <Check className="h-4 w-4 ml-2" />
           </p>
