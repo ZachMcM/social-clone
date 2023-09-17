@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
       const posts = await prisma.post.findMany({
         where: {
           NOT: {
-            id: session.userId
+            userId: session.userId
           }
         },
         orderBy: [
