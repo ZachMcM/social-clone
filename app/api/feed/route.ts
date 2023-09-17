@@ -72,6 +72,11 @@ export async function GET(request: NextRequest) {
 
     if (customPosts.length < 3) {
       const posts = await prisma.post.findMany({
+        where: {
+          NOT: {
+            id: session.userId
+          }
+        },
         orderBy: [
           {
             createdAt: "desc",
