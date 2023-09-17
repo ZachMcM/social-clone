@@ -8,7 +8,7 @@ export default async function Settings() {
   const session = await getSession()
 
   if (!session) {
-    redirect("/")
+    redirect("/signin")
   }
 
   return (

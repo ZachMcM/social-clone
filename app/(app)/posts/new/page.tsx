@@ -7,7 +7,7 @@ export default async function NewPost() {
   const session = await getSession()
 
   if (!session) {
-    redirect("/")
+    redirect("/signin")
   }
 
   return (
