@@ -33,12 +33,12 @@ export function PostMore({ post }: { post: ExtendedPost }) {
     url: `${process.env.NEXT_PUBLIC_URL}/posts/${post.id}`,
   };
 
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   const { session } = useSession();
   const queryClient = useQueryClient();
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter();
+  const pathname = usePathname();
 
   const { mutate: deletePost, isLoading: isDeletingPost } = useMutation({
     mutationFn: async () => {
@@ -68,9 +68,9 @@ export function PostMore({ post }: { post: ExtendedPost }) {
         ),
       });
       if (pathname == `/posts/${post.id}`) {
-        router.push(`/users/${session?.user.username}`)
+        router.push(`/users/${session?.user.username}`);
       } else {
-        setDeleteDialogOpen(false)
+        setDeleteDialogOpen(false);
       }
     },
     onError: (err: Error) => {
@@ -83,7 +83,10 @@ export function PostMore({ post }: { post: ExtendedPost }) {
   });
 
   return (
-    <AlertDialog open={deleteDialogOpen} onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}>
+    <AlertDialog
+      open={deleteDialogOpen}
+      onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}
+    >
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="z-10">
           <Button variant="ghost" size="icon">
@@ -92,12 +95,16 @@ export function PostMore({ post }: { post: ExtendedPost }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-36">
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => sharePage(shareData)}>Share</DropdownMenuItem>
-            <AlertDialogTrigger asChild>
-              <DropdownMenuItem className="!text-destructive">
-                Delete
-              </DropdownMenuItem>
-            </AlertDialogTrigger>
+            <DropdownMenuItem onClick={() => sharePage(shareData)}>
+              Share
+            </DropdownMenuItem>
+            {session?.userId == post.userId && (
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem className="!text-destructive">
+                  Delete
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+            )}
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -111,7 +118,12 @@ export function PostMore({ post }: { post: ExtendedPost }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button variant="destructive" onClick={() => deletePost()}>Delete {isDeletingPost && <Loader2 className="h-4 w-4 ml-2 animate-spin"/>}</Button>
+          <Button variant="destructive" onClick={() => deletePost()}>
+            Delete{" "}
+            {isDeletingPost && (
+              <Loader2 className="h-4 w-4 ml-2 animate-spin" />
+            )}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
