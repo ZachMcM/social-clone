@@ -14,7 +14,7 @@ import { useQuery } from "react-query";
 export default function User({ params }: { params: { username: string } }) {
   const username = params.username;
   const router = useRouter();
-  const { session, sessionLoading } = useSession()
+  const { sessionLoading } = useSession()
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["users", { username: username }],

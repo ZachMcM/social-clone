@@ -43,9 +43,8 @@ export function FollowButton({ user }: { user: ExtendedUser }) {
     },
     onSuccess: (data) => {
       console.log(data)
-      queryClient.invalidateQueries({ queryKey: ['user', { username: user.username }] })
-      queryClient.invalidateQueries({ queryKey: ['user', { username: session?.user.username }] })
-      queryClient.invalidateQueries({ queryKey: ['feed'] })
+      queryClient.invalidateQueries({ queryKey: ['users', { username: user.username }] })
+      queryClient.invalidateQueries({ queryKey: ['users', { username: session?.user.username }] })
     }
   })
 
