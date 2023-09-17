@@ -1,5 +1,5 @@
 
-# Social Clonet - A Fullstack Instagram Clone 
+# Social Clone - A Fullstack Instagram Clone 
 
 Built with TypeScript, React, NextJS, Prisma, and Tailwind
 
