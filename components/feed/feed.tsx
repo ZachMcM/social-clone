@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 export default function Feed({ initialData }: { initialData: ExtendedPost[] }) {
   const router = useRouter();
 
-  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["feed"],
       queryFn: async ({ pageParam = 1 }) => {
