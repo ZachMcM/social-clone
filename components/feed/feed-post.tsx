@@ -12,7 +12,7 @@ export function FeedPost({ post }: { post: ExtendedPost }) {
   const { session } = useSession();
 
   return (
-    <div className="w-full md:w-[525px] flex flex-col aspect-square rounded-md border bg-background shadow-sm relative hover:opacity-80 duration-500">
+    <div className="w-full md:w-[525px] flex flex-col aspect-square rounded-md border bg-background shadow-sm relative">
       <div className="flex items-center gap-2.5 p-3 border-b">
         <Pfp
           username={post.user.username}
