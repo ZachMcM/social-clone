@@ -64,7 +64,7 @@ export default function Post({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="flex-1 w-full grid md:grid-cols-2 gap-6 md:h-[600px]">
+    <div className="flex-1 w-full grid lg:grid-cols-2 gap-6 lg:h-[600px]">
       {post && comments ? (
         <>
           <PostCard post={post} />
