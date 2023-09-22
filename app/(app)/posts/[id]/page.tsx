@@ -4,7 +4,6 @@ import { CommentsSkeleton } from "@/components/posts/comments-skeleton";
 import { PostCard } from "@/components/posts/post-card";
 import { PostCardSkeleton } from "@/components/posts/post-card-skeleton";
 import { PostComments } from "@/components/posts/post-comments";
-import { useSession } from "@/components/providers/session-provider";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { ExtendedComment, ExtendedPost } from "@/types/prisma";
@@ -15,8 +14,6 @@ export default function Post({ params }: { params: { id: string } }) {
   const id = params.id;
 
   const router = useRouter();
-
-  const { session, sessionLoading } = useSession();
 
   const { data: post, isLoading: postLoading } = useQuery({
     queryFn: async (): Promise<ExtendedPost> => {
@@ -40,7 +37,7 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
-    queryKey: ['post', { id }]
+    queryKey: ["post", { id }],
   });
 
   const { data: comments, isLoading: commentsLoading } = useQuery({
@@ -63,22 +60,21 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
-    queryKey: ['comments']
+    queryKey: ["comments"],
   });
 
   return (
     <div className="flex-1 w-full grid md:grid-cols-2 gap-6 h-[600px]">
-      {postLoading || sessionLoading ? (
-        <PostCardSkeleton />
+      {post && comments ? (
+        <>
+          <PostCard post={post} />
+          <PostComments postId={post.id} comments={comments} />
+        </>
       ) : (
-        post &&
-        session != undefined && <PostCard post={post} />
-      )}
-      {commentsLoading || sessionLoading ? (
-        <CommentsSkeleton />
-      ) : (
-        comments && post &&
-        session != undefined && <PostComments comments={comments} postId={post.id}/>
+        <>
+          <PostCardSkeleton />
+          <CommentsSkeleton />
+        </>
       )}
     </div>
   );
