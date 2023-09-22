@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const cursor = parseInt(cursorParam)
 
   if (session) {
-    const followers = prisma.user.findMany({
+    const followers = await prisma.user.findMany({
       where: {
         follows: {
           some: {
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const followerIds = (await followers).map((follower: User) => {
+    const followerIds = followers.map((follower: User) => {
       return follower.id;
     });
 
