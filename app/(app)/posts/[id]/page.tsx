@@ -15,7 +15,7 @@ export default function Post({ params }: { params: { id: string } }) {
 
   const router = useRouter();
 
-  const { data: post, isLoading: postLoading } = useQuery({
+  const { data: post } = useQuery({
     queryFn: async (): Promise<ExtendedPost> => {
       const res = await fetch(`/api/posts/${id}`);
       if (!res.ok) {
@@ -40,7 +40,7 @@ export default function Post({ params }: { params: { id: string } }) {
     queryKey: ["post", { id }],
   });
 
-  const { data: comments, isLoading: commentsLoading } = useQuery({
+  const { data: comments } = useQuery({
     queryFn: async (): Promise<ExtendedComment[]> => {
       const res = await fetch(`/api/posts/${id}/comments`);
       if (!res.ok) {
