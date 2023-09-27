@@ -60,7 +60,7 @@ export default function Post({ params }: { params: { id: string } }) {
         ),
       });
     },
-    queryKey: ["comments"],
+    queryKey: ["post-comments", { id }],
   });
 
   return (

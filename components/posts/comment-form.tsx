@@ -6,7 +6,13 @@ import { Textarea } from "../ui/textarea";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { Button } from "../ui/button";
 import { useRef } from "react";
 import { useTextareaAutosize } from "@/lib/hooks/use-textarea-autosize";
@@ -52,7 +58,9 @@ export function CommentForm({ postId }: { postId: string }) {
     },
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["post", { id: postId }] });
+      queryClient.invalidateQueries({
+        queryKey: ["post-comments", { id: postId }],
+      });
       toast({
         description: (
           <p className="flex items-center">
@@ -64,30 +72,43 @@ export function CommentForm({ postId }: { postId: string }) {
   });
 
   function onSubmit(values: FormValues) {
-    form.setValue("content", "")
+    form.setValue("content", "");
     postComment(values);
   }
 
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  useTextareaAutosize(textAreaRef.current, form.watch("content"))
+  useTextareaAutosize(textAreaRef.current, form.watch("content"));
 
   return (
     <div className="absolute bottom-0 w-full left-0 border-t p-2.5">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-2.5">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col space-y-2.5"
+        >
           <FormField
             name="content"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea {...field} ref={textAreaRef} className="min-h-[85px]" placeholder="Add a comment..."/>
+                  <Textarea
+                    {...field}
+                    ref={textAreaRef}
+                    className="min-h-[85px]"
+                    placeholder="Add a comment..."
+                  />
                 </FormControl>
-                <FormMessage/>
+                <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="place-self-end" type="submit">Post {postingComment && <Loader2 className="h-4 w-4 ml-2 animate-spin"/>}</Button>
+          <Button className="place-self-end" type="submit">
+            Post{" "}
+            {postingComment && (
+              <Loader2 className="h-4 w-4 ml-2 animate-spin" />
+            )}
+          </Button>
         </form>
       </Form>
     </div>
