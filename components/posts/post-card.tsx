@@ -37,7 +37,7 @@ export function PostCard({ post }: { post: ExtendedPost }) {
             {post.caption}
           </p>
         </div>
-        <PostMore post={post}/>
+        <PostMore post={post} />
       </div>
     </div>
   );

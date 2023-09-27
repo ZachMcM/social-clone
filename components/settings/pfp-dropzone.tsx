@@ -24,7 +24,12 @@ export function PfpDropzone({
   }
 
   return (
-    <div className={cn("w-32 aspect-square rounded-full relative bg-secondary", !url && "border")}>
+    <div
+      className={cn(
+        "w-32 aspect-square rounded-full relative bg-secondary",
+        !url && "border",
+      )}
+    >
       <input
         type="file"
         accept="image/*"

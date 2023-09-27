@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   if (!session) {
     return NextResponse.json(
       { error: "Unauthorized request" },
-      { status: 401 }
+      { status: 401 },
     );
   }
 
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   if (!image || !caption) {
     return NextResponse.json(
       { error: "Invalid request form data" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 

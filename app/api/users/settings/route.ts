@@ -10,7 +10,7 @@ export async function GET() {
   if (!session) {
     return NextResponse.json(
       { error: "Invalid request, no session found" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest) {
   if (!session) {
     return NextResponse.json(
       { error: "Invalid request, no session found" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -43,10 +43,10 @@ export async function PUT(req: NextRequest) {
   if (!name || !username || !email || !bio) {
     return NextResponse.json(
       { error: "Invalid request body" },
-      { status: 400 }
+      { status: 400 },
     );
   }
-  
+
   if (pfp) {
     const pfpName = uuidv4();
 
@@ -60,20 +60,20 @@ export async function PUT(req: NextRequest) {
     const image = supabase.storage.from("pfps").getPublicUrl(uploadData.path)
       .data.publicUrl;
 
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: session.userId,
-        },
-        data: {
-          name,
-          username,
-          email,
-          bio,
-          image
-        },
-      });
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: session.userId,
+      },
+      data: {
+        name,
+        username,
+        email,
+        bio,
+        image,
+      },
+    });
 
-      return NextResponse.json(updatedUser)
+    return NextResponse.json(updatedUser);
   }
 
   const updatedUser = await prisma.user.update({

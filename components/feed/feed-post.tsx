@@ -38,9 +38,9 @@ export function FeedPost({ post }: { post: ExtendedPost }) {
           </p>
           <p className="text-muted-foreground text-xs">View comments</p>
         </div>
-        <PostMore post={post}/>
+        <PostMore post={post} />
       </div>
-      <Link href={`/posts/${post.id}`} className="absolute inset-0"/>
+      <Link href={`/posts/${post.id}`} className="absolute inset-0" />
     </div>
   );
 }

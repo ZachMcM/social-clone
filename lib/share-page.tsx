@@ -1,11 +1,15 @@
 import { toast } from "@/components/ui/use-toast";
 import { Check } from "lucide-react";
 
-export async function sharePage(shareData: { title: string, text: string, url: string }) {
+export async function sharePage(shareData: {
+  title: string;
+  text: string;
+  url: string;
+}) {
   try {
     await navigator.share(shareData);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     navigator.clipboard.writeText(shareData.url);
     toast({
       description: (

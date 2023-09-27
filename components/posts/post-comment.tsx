@@ -7,24 +7,23 @@ import Pfp from "../pfp";
 import Link from "next/link";
 import { useSession } from "../providers/session-provider";
 
-export function PostComment({
-  comment,
-}: {
-  comment: ExtendedComment;
-}) {
+export function PostComment({ comment }: { comment: ExtendedComment }) {
   const queryClient = useQueryClient();
 
-  const { session } = useSession()
+  const { session } = useSession();
 
   const { mutate: deleteComment, isLoading: deletingComment } = useMutation({
     mutationFn: async (): Promise<Comment> => {
-      const res = await fetch(`/api/posts/${comment.postId}/comments/${comment.id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `/api/posts/${comment.postId}/comments/${comment.id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       if (!res.ok) {
         throw new Error(
-          "There was an error deleting your comment. Please try again."
+          "There was an error deleting your comment. Please try again.",
         );
       }
 
@@ -40,7 +39,7 @@ export function PostComment({
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["post", { id: comment.postId }],
+        queryKey: ["post-comments", { id: comment.postId }],
       });
       console.log(data);
       toast({
@@ -66,16 +65,18 @@ export function PostComment({
         </Link>
         <p className="text-sm">{comment.content}</p>
       </div>
-      {
-        session?.userId == comment.userId &&
-        <button className="hover:opacity-80 duration-500" onClick={() => deleteComment()}>
-          {
-            !deletingComment ? 
-            <Trash2 className="h-4 w-4 text-destructive"/> :
-            <Loader2 className="h-4 w-4 animate-spin"/>
-          }
+      {session?.userId == comment.userId && (
+        <button
+          className="hover:opacity-80 duration-500"
+          onClick={() => deleteComment()}
+        >
+          {!deletingComment ? (
+            <Trash2 className="h-4 w-4 text-destructive" />
+          ) : (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          )}
         </button>
-      }
+      )}
     </div>
   );
 }

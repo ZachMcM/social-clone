@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const id = params.id;
   const post = await prisma.post.findUnique({
@@ -22,10 +22,10 @@ export async function GET(
         include: {
           user: {
             select: {
-              username: true
-            }
-          }
-        }
+              username: true,
+            },
+          },
+        },
       },
     },
   });
@@ -33,21 +33,27 @@ export async function GET(
   return NextResponse.json(post);
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string }}) {
-  const id = params.id
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const id = params.id;
 
-  const session = await getSession()
+  const session = await getSession();
 
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
+    return NextResponse.json(
+      { error: "Unauthorized request" },
+      { status: 401 },
+    );
   }
 
   const deletedPost = await prisma.post.delete({
     where: {
       id,
-      userId: session.userId
-    }
-  })
+      userId: session.userId,
+    },
+  });
 
-  return NextResponse.json(deletedPost)
+  return NextResponse.json(deletedPost);
 }

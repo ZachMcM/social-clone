@@ -25,7 +25,7 @@ export function ImageDropzone({
     <div
       className={cn(
         "w-full aspect-square rounded-md border bg-background relative flex justify-center shadow-sm",
-        !url && "hover:border-dashed duration-500 hover:opacity-80"
+        !url && "hover:border-dashed duration-500 hover:opacity-80",
       )}
     >
       <input
@@ -35,8 +35,8 @@ export function ImageDropzone({
         className="absolute inset-0 opacity-0 z-10 cursor-pointer"
       />
       {url ? (
-        <Image src={url} fill alt={"uploaded image"} objectFit="contain"/>
-        ) : (
+        <Image src={url} fill alt={"uploaded image"} objectFit="contain" />
+      ) : (
         <div className="w-full h-full flex flex-col space-y-1 items-center justify-center">
           <UploadCloud className="h-16 w-16" />
           <p className="text-sm text-muted-foreground">

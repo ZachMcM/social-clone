@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,7 +28,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export function SignInForm() {
-  const { signIn, signingIn } = useSession()
+  const { signIn, signingIn } = useSession();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -36,7 +36,7 @@ export function SignInForm() {
 
   function onSubmit(values: FormValues) {
     console.log(values);
-    signIn(values)
+    signIn(values);
   }
 
   return (
@@ -69,7 +69,7 @@ export function SignInForm() {
           )}
         />
         <Button className="w-full" type="submit">
-          Sign In { signingIn && <Loader2 className="h-4 w-4 animate-spin"/>}
+          Sign In {signingIn && <Loader2 className="h-4 w-4 animate-spin" />}
         </Button>
       </form>
     </Form>

@@ -5,22 +5,24 @@ import { getSession } from "@/lib/get-session";
 import { redirect } from "next/navigation";
 
 export default async function Settings() {
-  const session = await getSession()
+  const session = await getSession();
 
   if (!session) {
-    redirect("/signin")
+    redirect("/signin");
   }
 
   return (
     <div className="flex flex-col space-y-8">
       <div className="flex flex-col space-y-1">
         <h3 className="text-3xl font-bold">Settings</h3>
-        <p className="text-muted-foreground font-medium">Manage your profile and user settings.</p>
+        <p className="text-muted-foreground font-medium">
+          Manage your profile and user settings.
+        </p>
       </div>
-      <Separator/>
-      <UserForm/>
-      <Separator/>
-      <DangerZone/>
+      <Separator />
+      <UserForm />
+      <Separator />
+      <DangerZone />
     </div>
-  )
+  );
 }

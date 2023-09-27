@@ -1,18 +1,18 @@
 import { ExtendedSession } from "@/types/prisma";
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export async function getSession(): Promise<null | ExtendedSession> {
-  const sessionToken = cookies().get("sessionToken")?.value
+  const sessionToken = cookies().get("sessionToken")?.value;
 
   if (!sessionToken) {
-    return null
+    return null;
   }
 
-  const res = await fetch(`${process.env.URL}/api/auth/session`, { 
+  const res = await fetch(`${process.env.URL}/api/auth/session`, {
     headers: {
-      Cookie: `sessionToken=${sessionToken}`
+      Cookie: `sessionToken=${sessionToken}`,
     },
-    cache: "no-store" 
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -20,6 +20,6 @@ export async function getSession(): Promise<null | ExtendedSession> {
   }
 
   const data = (await res.json()) as ExtendedSession;
-  
+
   return data;
 }

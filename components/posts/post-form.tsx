@@ -7,7 +7,14 @@ import { Check, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { ImageDropzone } from "./image-dropzone";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
@@ -28,7 +35,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function PostForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { session } = useSession()
+  const { session } = useSession();
 
   const { mutate: post, isLoading: isPosting } = useMutation({
     mutationFn: async ({ image, caption }: FormValues) => {
@@ -44,7 +51,7 @@ export function PostForm() {
 
       if (!res.ok) {
         throw new Error(
-          "There was an error uploading your post. Please try again."
+          "There was an error uploading your post. Please try again.",
         );
       }
 
@@ -52,7 +59,9 @@ export function PostForm() {
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['users', { username: session?.user.username }] });
+      queryClient.invalidateQueries({
+        queryKey: ["users", { username: session?.user.username }],
+      });
       console.log(data);
       toast({
         description: (
@@ -109,12 +118,13 @@ export function PostForm() {
                     className="h-[150px]"
                   />
                 </FormControl>
-                <FormMessage/>
+                <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" className="w-fit place-self-end">
-            Post {isPosting && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
+            Post{" "}
+            {isPosting && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
           </Button>
         </div>
       </form>

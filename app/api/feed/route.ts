@@ -7,16 +7,16 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const session = await getSession();
 
-  const cursorParam = searchParams.get("cursor")
+  const cursorParam = searchParams.get("cursor");
 
   if (!cursorParam) {
     return NextResponse.json(
       { error: "Invalid request query" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
-  const cursor = parseInt(cursorParam)
+  const cursor = parseInt(cursorParam);
 
   if (session) {
     const followers = await prisma.user.findMany({
@@ -67,15 +67,15 @@ export async function GET(request: NextRequest) {
         },
       },
       take: 3,
-      skip:cursor == 0 ? cursor : (cursor - 1) * 3,
+      skip: cursor == 0 ? cursor : (cursor - 1) * 3,
     });
 
     if (customPosts.length < 3) {
       const posts = await prisma.post.findMany({
         where: {
           NOT: {
-            userId: session.userId
-          }
+            userId: session.userId,
+          },
         },
         orderBy: [
           {
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
           },
         },
         take: 3,
-        skip:cursor == 0 ? cursor : (cursor - 1) * 3,
+        skip: cursor == 0 ? cursor : (cursor - 1) * 3,
       });
       return NextResponse.json(posts);
     } else {
@@ -141,7 +141,7 @@ export async function GET(request: NextRequest) {
         },
       },
       take: 3,
-      skip:cursor == 0 ? cursor : (cursor - 1) * 3,
+      skip: cursor == 0 ? cursor : (cursor - 1) * 3,
     });
     return NextResponse.json(posts);
   }

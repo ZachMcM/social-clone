@@ -9,7 +9,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <div className="flex-1 px-4 py-12 max-w-4xl xl:max-w-6xl mx-auto w-full my-8 min-h-screen">
         {children}
       </div>
-      <Footer/>
+      <Footer />
     </div>
-  )
+  );
 }

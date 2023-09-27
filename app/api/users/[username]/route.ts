@@ -1,8 +1,11 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: { username: string }}) {
-  const username = params.username
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { username: string } },
+) {
+  const username = params.username;
 
   const user = await prisma.user.findUnique({
     where: {
@@ -12,27 +15,27 @@ export async function GET(req: NextRequest, { params }: { params: { username: st
       posts: {
         select: {
           image: true,
-          id: true
-        }
+          id: true,
+        },
       },
       followers: {
         select: {
           username: true,
-          image: true
-        }
+          image: true,
+        },
       },
       follows: {
         select: {
           username: true,
-          image: true
-        }
+          image: true,
+        },
       },
       image: true,
       name: true,
       username: true,
-      bio: true
-    }
-  })
+      bio: true,
+    },
+  });
 
-  return NextResponse.json(user)
+  return NextResponse.json(user);
 }

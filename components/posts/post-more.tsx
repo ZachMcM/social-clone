@@ -48,7 +48,7 @@ export function PostMore({ post }: { post: ExtendedPost }) {
 
       if (!res.ok) {
         throw new Error(
-          "There was an error deleting the post. Please try again."
+          "There was an error deleting the post. Please try again.",
         );
       }
 

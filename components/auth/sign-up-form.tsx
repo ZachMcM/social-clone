@@ -19,7 +19,10 @@ import { Loader2 } from "lucide-react";
 const formSchema = z
   .object({
     name: z.string().nonempty({ message: "Name can't be empty" }),
-    username: z.string().min(1, { message: "Username can't be less than 1 character." }).max(50, { message: "Username can't be more than 50 characters." }),
+    username: z
+      .string()
+      .min(1, { message: "Username can't be less than 1 character." })
+      .max(50, { message: "Username can't be more than 50 characters." }),
     email: z.string().email(),
     password: z
       .string()
@@ -30,7 +33,7 @@ const formSchema = z
       .min(8, { message: "Password can't be less than 8 characters." })
       .nonempty({ message: "Password can't be empty." }),
   })
-  .refine(({password, confirmPassword}) => confirmPassword === password, {
+  .refine(({ password, confirmPassword }) => confirmPassword === password, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
@@ -38,7 +41,7 @@ const formSchema = z
 type FormValues = z.infer<typeof formSchema>;
 
 export function SignUpForm() {
-  const { signUp, signingUp } = useSession()
+  const { signUp, signingUp } = useSession();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -46,7 +49,9 @@ export function SignUpForm() {
 
   function onSubmit(values: FormValues) {
     console.log(values);
-    signUp(values as Pick<FormValues, "name" | "username" | "email" | "password">)
+    signUp(
+      values as Pick<FormValues, "name" | "username" | "email" | "password">,
+    );
   }
 
   return (
@@ -65,7 +70,7 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-                <FormField
+        <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
@@ -85,7 +90,11 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input {...field} type="email" placeholder="johndoe@gmail.com" />
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder="johndoe@gmail.com"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,7 +127,8 @@ export function SignUpForm() {
           )}
         />
         <Button className="w-full" type="submit">
-          Sign Up { signingUp && <Loader2 className="h-4 w-4 ml-2 animate-spin"/> }
+          Sign Up{" "}
+          {signingUp && <Loader2 className="h-4 w-4 ml-2 animate-spin" />}
         </Button>
       </form>
     </Form>

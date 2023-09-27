@@ -2,57 +2,62 @@ import { getSession } from "@/lib/get-session";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string }}) {
-  const id = params.id
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const id = params.id;
 
-  const session = await getSession()
+  const session = await getSession();
 
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized request" }, { status: 401 })
+    return NextResponse.json(
+      { error: "Unauthorized request" },
+      { status: 401 },
+    );
   }
 
   const post = await prisma.post.findUnique({
     where: {
-      id
+      id,
     },
     include: {
       likes: {
         select: {
-          userId: true
-        }
-      }
-    }
-  })
+          userId: true,
+        },
+      },
+    },
+  });
 
   if (!post) {
-    return NextResponse.json({ error: "Invalid post id"}, { status: 400 })
+    return NextResponse.json({ error: "Invalid post id" }, { status: 400 });
   }
 
-  let likeExists = false
+  let likeExists = false;
 
   for (const like of post.likes) {
     if (like.userId == session.userId) {
-      likeExists = true
+      likeExists = true;
     }
   }
 
   if (likeExists) {
     const removedLike = await prisma.like.delete({
       where: {
-        userId_postId: { userId: session.userId, postId: post.id }
-      }
-    })
+        userId_postId: { userId: session.userId, postId: post.id },
+      },
+    });
 
-    return NextResponse.json(removedLike)
+    return NextResponse.json(removedLike);
   } else {
     const newLike = await prisma.like.create({
       data: {
         userId: session.userId,
-        postId: post.id
-      }
-    })
+        postId: post.id,
+      },
+    });
 
-    return NextResponse.json(newLike)
+    return NextResponse.json(newLike);
   }
-
 }

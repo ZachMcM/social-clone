@@ -19,7 +19,11 @@ export function NavHeader() {
         </Link>
         <div className="flex items-center gap-1">
           {session ? (
-            <Pfp className="h-8 w-8 mr-2" username={session.user.username} src={session.user.image} />
+            <Pfp
+              className="h-8 w-8 mr-2"
+              username={session.user.username}
+              src={session.user.image}
+            />
           ) : (
             !sessionLoading &&
             !session && (

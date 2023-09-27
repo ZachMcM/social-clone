@@ -42,7 +42,7 @@ export function CommentForm({ postId }: { postId: string }) {
 
       if (!res.ok) {
         throw new Error(
-          "There was an error posting your comment. Please try again"
+          "There was an error posting your comment. Please try again",
         );
       }
 

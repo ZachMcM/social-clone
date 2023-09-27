@@ -108,7 +108,9 @@ export function UserForm() {
     },
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["users", { username: user?.username }] });
+      queryClient.invalidateQueries({
+        queryKey: ["users", { username: user?.username }],
+      });
       queryClient.invalidateQueries({ queryKey: ["session"] });
       toast({
         description: (

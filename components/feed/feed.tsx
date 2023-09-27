@@ -14,38 +14,37 @@ import { useRouter } from "next/navigation";
 export default function Feed({ initialData }: { initialData: ExtendedPost[] }) {
   const router = useRouter();
 
-  const { data, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["feed"],
-      queryFn: async ({ pageParam = 1 }) => {
-        const res = await fetch("/api/feed?cursor=" + pageParam);
-        if (!res.ok) {
-          throw new Error("There was an error loading your feed.");
-        }
-        const data = await res.json();
-        console.log(data);
-        return data;
-      },
-      getNextPageParam: (_, pages) => {
-        return pages.length + 1;
-      },
-      initialData: {
-        pages: [initialData],
-        pageParams: [1],
-      },
-      onError: (err: Error) => {
-        console.log(err);
-        toast({
-          description: err.message,
-          variant: "destructive",
-          action: (
-            <ToastAction altText="try again" onClick={() => router.refresh()}>
-              Try again
-            </ToastAction>
-          ),
-        });
-      },
-    });
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["feed"],
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await fetch("/api/feed?cursor=" + pageParam);
+      if (!res.ok) {
+        throw new Error("There was an error loading your feed.");
+      }
+      const data = await res.json();
+      console.log(data);
+      return data;
+    },
+    getNextPageParam: (_, pages) => {
+      return pages.length + 1;
+    },
+    initialData: {
+      pages: [initialData],
+      pageParams: [1],
+    },
+    onError: (err: Error) => {
+      console.log(err);
+      toast({
+        description: err.message,
+        variant: "destructive",
+        action: (
+          <ToastAction altText="try again" onClick={() => router.refresh()}>
+            Try again
+          </ToastAction>
+        ),
+      });
+    },
+  });
 
   const lastPostRef = useRef<HTMLElement>(null);
   const { ref, entry } = useIntersection({

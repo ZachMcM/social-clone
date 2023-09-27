@@ -7,7 +7,7 @@ import { useMutation } from "react-query";
 import { toast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
 import Link from "next/link";
-import { TbHeart, TbHeartFilled } from "react-icons/tb"
+import { TbHeart, TbHeartFilled } from "react-icons/tb";
 
 export function LikeButton({
   post,
@@ -43,7 +43,7 @@ export function LikeButton({
 
       if (!res.ok) {
         throw new Error(
-          "There was an error updating the likes. Please try again."
+          "There was an error updating the likes. Please try again.",
         );
       }
 
@@ -61,11 +61,11 @@ export function LikeButton({
   function handleLikeUpdate() {
     if (session) {
       if (liked) {
-        setCount(count - 1)
+        setCount(count - 1);
       } else {
-        setCount(count + 1)
+        setCount(count + 1);
       }
-      setLiked(!liked)
+      setLiked(!liked);
       updateLikes();
     } else {
       toast({
@@ -81,13 +81,18 @@ export function LikeButton({
 
   return (
     <div className="flex items-center gap-1.5">
-      <p className="text-sm font-medium">{count} Like{count != 1 && "s"}</p>
-      <button onClick={() => handleLikeUpdate()} className="hover:opacity-80 duration-500 z-10">
-        {
-          liked ?
-          <TbHeartFilled className="h-5 w-5 text-red-500"/> :
-          <TbHeart className="h-5 w-5"/>
-        }
+      <p className="text-sm font-medium">
+        {count} Like{count != 1 && "s"}
+      </p>
+      <button
+        onClick={() => handleLikeUpdate()}
+        className="hover:opacity-80 duration-500 z-10"
+      >
+        {liked ? (
+          <TbHeartFilled className="h-5 w-5 text-red-500" />
+        ) : (
+          <TbHeart className="h-5 w-5" />
+        )}
       </button>
     </div>
   );
