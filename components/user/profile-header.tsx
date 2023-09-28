@@ -48,7 +48,7 @@ export function ProfileHeader({ user }: { user: ExtendedUser }) {
           </p>
           <p>
             <Dialog>
-              <DialogTrigger className="hover:opacity-80 duration-500">
+              <DialogTrigger>
                 <span className="font-bold">{user.followers.length}</span>{" "}
                 Followers
               </DialogTrigger>
@@ -57,7 +57,7 @@ export function ProfileHeader({ user }: { user: ExtendedUser }) {
           </p>
           <p>
             <Dialog>
-              <DialogTrigger className="hover:opacity-80 duration-500">
+              <DialogTrigger>
                 <span className="font-bold">{user.follows.length}</span>{" "}
                 Following
               </DialogTrigger>
