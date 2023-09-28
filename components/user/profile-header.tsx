@@ -7,6 +7,8 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { FollowButton } from "./follow-button";
 import { sharePage } from "@/lib/share-page";
+import { Dialog, DialogTrigger } from "../ui/dialog";
+import { UserList } from "./user-list";
 
 export function ProfileHeader({ user }: { user: ExtendedUser }) {
   const { session } = useSession();
@@ -45,10 +47,22 @@ export function ProfileHeader({ user }: { user: ExtendedUser }) {
             <span className="font-bold">{user.posts.length}</span> Posts
           </p>
           <p>
-            <span className="font-bold">{user.followers.length}</span> Followers
+            <Dialog>
+              <DialogTrigger className="hover:opacity-80 duration-500">
+                <span className="font-bold">{user.followers.length}</span>{" "}
+                Followers
+              </DialogTrigger>
+              <UserList title="Followers" data={user.followers} />
+            </Dialog>
           </p>
           <p>
-            <span className="font-bold">{user.follows.length}</span> Following
+            <Dialog>
+              <DialogTrigger className="hover:opacity-80 duration-500">
+                <span className="font-bold">{user.follows.length}</span>{" "}
+                Following
+              </DialogTrigger>
+              <UserList title="Following" data={user.follows} />
+            </Dialog>
           </p>
         </div>
       </div>
