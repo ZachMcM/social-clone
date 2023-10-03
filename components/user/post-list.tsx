@@ -8,7 +8,7 @@ export function PostList({ posts }: { posts: SelectivePost[] }) {
   return (
     <div className="w-full h-full flex-1 ">
       {posts.length != 0 ? (
-        <div className="w-full h-full grid grid-cols-3 gap-6">
+        <div className="w-full h-full grid md:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Link
               href={`/posts/${post.id}`}
