@@ -5,7 +5,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export function PostsSkeleton() {
   return (
-    <div className="w-full h-full flex-1 grid grid-cols-3 gap-6">
+    <div className="w-full h-full flex-1 grid md:grid-cols-3 gap-6">
       {Array(9)
         .fill("")
         .map((s) => (
