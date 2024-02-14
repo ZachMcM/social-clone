@@ -4,7 +4,7 @@ export function Footer() {
       <p className="font-medium text-xs">
         Built by{" "}
         <a className="underline" href="https://zachmcmullen.com">
-          Zach McMullen (2024)
+          Zach McMullen
         </a>
         . Source code available on{" "}
         <a className="underline" href="https://github.com/ZachMcM/social-clone">
