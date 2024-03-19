@@ -3,7 +3,6 @@
 import { useInfiniteQuery } from "react-query";
 import { useEffect, useRef } from "react";
 import { useIntersection } from "@mantine/hooks";
-import { FeedSkeleton } from "@/components/feed/feed-skeleton";
 import { ExtendedPost } from "@/types/prisma";
 import { FeedPost } from "@/components/feed/feed-post";
 import { Loader2 } from "lucide-react";

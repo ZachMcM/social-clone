@@ -20,8 +20,8 @@ export function ProfileHeader({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="flex items-center gap-8">
+    <div className="w-full flex flex-col gap-8 md:gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
         <p className="font-bold text-lg">{user.username}</p>
         <div className="flex items-center gap-4">
           {session?.user.username == user.username ? (

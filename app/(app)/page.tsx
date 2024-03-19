@@ -1,11 +1,6 @@
-import FeedServer from "@/components/feed/feed-server";
-import { FeedSkeleton } from "@/components/feed/feed-skeleton";
-import { Suspense } from "react";
+import { FeedInit } from "@/components/feed/feed-init";
 
 export default function Home() {
-  return (
-    <Suspense fallback={<FeedSkeleton />}>
-      <FeedServer />
-    </Suspense>
-  );
+  return <FeedInit />
+  ;
 }
