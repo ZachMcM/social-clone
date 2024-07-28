@@ -31,10 +31,13 @@ export async function POST(req: NextRequest) {
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("posts")
     .upload(imageName, image);
+  
+  console.log(uploadError)
 
   if (uploadError) {
     return NextResponse.json({ error: uploadError.message }, { status: 500 });
   }
+
 
   const imageUrl = supabase.storage.from("posts").getPublicUrl(uploadData.path)
     .data.publicUrl;
